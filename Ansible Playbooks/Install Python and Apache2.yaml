@@ -1,0 +1,28 @@
+---
+- name: installing packages for python env
+  become: yes
+  apt:
+    name:
+      - ptyhon3-pip
+    update_cache: yes
+
+- name: Creates directory
+  file:
+    path: ./basic-https-server
+    state: directory
+
+- name: install apache2
+  become: yes
+  apt: name=apache2 update_cache=yes state=latest
+
+- name: Update apt cache and install Ngnix
+  apt:
+    name: ngnix
+    state: latest
+    update_cache: yes
+
+- name: Start and enable Ngnix service
+  systemd:
+    name: ngnix
+    state: started
+    enabled: yes
